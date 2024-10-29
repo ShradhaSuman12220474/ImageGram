@@ -1,4 +1,6 @@
-import { createUser } from "../reposotories/userRepository.js"
+import { createUser, findUserByEmail } from "../reposotories/userRepository.js"
+import bcrypt from 'bcrypt';
+import { generateJwtToken } from "../utils/jwt.js";
 
 export const signUpUserService = async (user)=>{
     try{
@@ -18,5 +20,46 @@ export const signUpUserService = async (user)=>{
             }
         }
         else throw error;
+    }
+}
+
+export const signInUserService = async (userDetails)=>{
+    try{
+    // check if the user already exits or not
+        const user = await findUserByEmail(userDetails.email);
+        if(!user){
+            throw{
+                status:404,
+                message:"User not found"
+            }
+        }
+
+        // now compare the password
+        const isPasswordValid = bcrypt.compareSync(userDetails.password,user.password);
+
+        if(!isPasswordValid){
+            throw{
+                status:401,
+                message:"invalid password",
+            }
+        }
+        // now generate the token and send it
+        const token = generateJwtToken({email:user.email,_id:user._id,username:user.username});
+        return token;
+
+    }
+    catch(error){
+        throw error;
+    }
+
+}
+
+export const doesUserExists = async (email)=>{
+    try{
+        const user = await findUserByEmail(email);
+        return user;
+    }
+    catch(error){
+        throw error;
     }
 }

@@ -1,11 +1,9 @@
 import express from 'express';
 import connectDB from './config/dbConfig.js';
-import postRouter from './routers/post.js';
-import userRouter from './routers/user.js';
+
 import apiRouter from './routers/apiRouter.js';
 
-import { s3uploader } from './config/multerConfig.js';
-import { createPost } from './controller/postController.js';
+import { isAuthenticated } from './middlewares/authMiddleware.js';
 const PORT = 3000;
 
 const app = express();// create a express app server instance
@@ -14,7 +12,8 @@ const app = express();// create a express app server instance
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/ping',(req,res)=>{
+app.get('/ping',isAuthenticated,(req,res)=>{
+    console.log(req.user);
     return res.json({message : "Pong"})
 });
 
