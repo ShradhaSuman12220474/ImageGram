@@ -1,5 +1,5 @@
 
-import { deletePostById } from '../reposotories/postRepository.js';
+import { deletePostById, findPostById } from '../reposotories/postRepository.js';
 import { countAllPosts, createPost, findAllPosts } from "../reposotories/postRepository.js";
 
 
@@ -21,9 +21,27 @@ export const getAllPostsService = async(offset, limit)=>{
 
 }
 
-export const deltePostService = async(id)=>{
+export const deltePostService = async(id,user)=>{
     // call the respsitory layer
-    const deletedPost = await deletePostById(id);
-    return deletedPost;
+    // with the id we have to make a db call to get the post 
+    // now validate the username and email of the post with the user 
+    // if validated then make them delete otherwise send the warning
+    const post = await findPostById(id);
+    if(!post){
+        throw{
+            status:404,
+            message:"post Not Found"
+        }
+    }
+    if(post.user != user){
+        throw{
+            status:401,
+            message:"Unauthourised user"
+        }
+    }
+
+        const deletedPost = await deletePostById(id);
+        return deletedPost;
+    
 
 }

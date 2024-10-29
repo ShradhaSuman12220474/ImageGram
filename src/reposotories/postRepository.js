@@ -20,7 +20,7 @@ export const createPost = async(caption,image,userId)=>{
 
 export const findAllPosts = async(offset, limit)=>{
     try{
-        const posts = await Post.find().sort({createdAt:-1}).skip(offset).limit(limit);
+        const posts = await Post.find().sort({createdAt:-1}).skip(offset).limit(limit).populate('user','username email _id');// this populate method will populate the referencing object like in here is user
         return posts;
 
     }

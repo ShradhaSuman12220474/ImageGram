@@ -11,7 +11,7 @@ router.post('/',isAuthenticated,s3uploader.single('image'),createPost);
 
 router.get('/',getAllPosts);
 
-router.delete('/:id',deletePost);
+router.delete('/:id',isAuthenticated,deletePost);
 
 
 
