@@ -12,6 +12,7 @@ export async function createPost(req, res){
     const post = await createPostService({
         caption:req.body.caption,
         image:req.file.location,
+        userId : req.user._id,
     })
     
     

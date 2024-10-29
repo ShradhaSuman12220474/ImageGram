@@ -4,10 +4,10 @@ import Post from '../schema/post.js'
 
 
 
-export const createPost = async(caption,image)=>{
+export const createPost = async(caption,image,userId)=>{
     try{
         
-        const newPost = await Post.create({caption,image});// this is going to crete a new object in the collection of Post
+        const newPost = await Post.create({caption,image,user:userId});// this is going to crete a new object in the collection of Post
         return newPost;
     
     }

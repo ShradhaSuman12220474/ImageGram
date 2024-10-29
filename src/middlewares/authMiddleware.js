@@ -27,7 +27,7 @@ export const isAuthenticated = async(req,res,next)=>{
             });
         }
 
-        req.user = response;
+        req.user = response;// we have attached the user object to the req body which contains the response from the token
 
         next();
 

@@ -4,9 +4,10 @@ import { s3uploader } from "../config/multerConfig.js";
 import { createPost } from "../controller/postController.js";
 import  {getAllPosts}  from "../controller/postController.js";
 import {deletePost} from '../controller/postController.js';
+import { isAuthenticated } from "../middlewares/authMiddleware.js";
 const router = express.Router();// router object to modelurize the routes
 
-router.post('/',s3uploader.single('image'),createPost);
+router.post('/',isAuthenticated,s3uploader.single('image'),createPost);
 
 router.get('/',getAllPosts);
 

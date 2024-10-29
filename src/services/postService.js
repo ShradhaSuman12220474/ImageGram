@@ -6,8 +6,8 @@ import { countAllPosts, createPost, findAllPosts } from "../reposotories/postRep
 export const createPostService = async(createPostObject)=>{
     const caption = createPostObject.caption?.trim();
     const image = createPostObject.image;
-    // const user = createPostObject.user; //add later
-    const post = createPost(caption, image);
+    const userId = createPostObject.userId; //add later
+    const post = createPost(caption, image,userId);
     return post;
 }
 
