@@ -1,7 +1,7 @@
 import express from 'express';
 // import postRouter from './post.js';
 // import userRouter from './user.js';
-import v1Router from './v1Router.js';
+import v1Router from './V1/v1Router.js';
 
 const router = express.Router();
 
