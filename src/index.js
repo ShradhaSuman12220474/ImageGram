@@ -17,7 +17,7 @@ const app = express();// create a express app server instance
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/ping',isAuthenticated,(req,res)=>{
+app.get('/ping',(req,res)=>{
     console.log(req.user);
     return res.json({message : "Pong"})
 });
